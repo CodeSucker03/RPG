@@ -3,8 +3,9 @@ require_relative 'ImageHandler'
 
 
 class Fire
+  attr_accessor :image
   def initialize(x, y, width,height)
-    @fire = Sprite.new(
+    @image = Sprite.new(
       'Image/Fire.png',
       x: x,
       y: y,
@@ -18,6 +19,6 @@ class Fire
   end
 
   def runAnimation
-    @fire.play
+    @image.play
   end
 end

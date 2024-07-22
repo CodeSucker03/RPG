@@ -1,27 +1,37 @@
 require 'ruby2d'
 require_relative 'ImageHandler' # to read dimemsion of image ==> must install (gem install rmagick)
 require_relative 'CollisionChecker'
-
+require_relative 'CommonParameter'
 
 
 class Player < Sprite
-  attr_reader :speed
+  attr_reader :x, :y, :speed, :worldX, :worldY
   attr_accessor :upDirection, :downDirection, :leftDirection, :rightDirection
 
-  def initialize(x, y, width, height)
+  def initialize(width, height)
     super(
       'Image/Player.png',
-      x: x,
-      y: y,
+      x: CP::SCREEN_WIDTH / 2 - (CP::TILE_SIZE/2),
+      y: CP::SCREEN_HEIGHT / 2 - (CP::TILE_SIZE/2),
       width: width, height: height,
       clip_width: width_Of('Image/Player.png') / 4,
       animations: {fly: 1..3}
     )
-    @speed = 2
+    @speed = 10
     @upDirection = false
     @downDirection = false
     @leftDirection = false
     @rightDirection = false
+
+    #
+    @worldX = @x
+    @worldY = @y
+
+
+
+
+
+
 
 
     #Area for collision
@@ -38,13 +48,13 @@ class Player < Sprite
 #-------------------------------- Update -----------------------------------------
   def update()
     if(self.upDirection == true)
-      self.y = self.y - self.speed
+      @worldY -= @speed
     elsif(self.downDirection == true)
-      self.y = self.y + self.speed
+      @worldY += @speed
     elsif(self.leftDirection == true)
-      self.x = self.x - self.speed
+      @worldX -= @speed
     elsif(self.rightDirection == true)
-      self.x = self.x + self.speed
+      @worldX += @speed
     end
   end
 
@@ -63,26 +73,6 @@ class Player < Sprite
       elsif(self.rightDirection == true)
           new_x = self.x + self.speed
       end
-
-
-    @wallcollision = false  # Reset wall collision state before checking
-    (map.size).times do |row|
-      (map.size).times do |col|
-       if map[row][col] == 4
-        wall_x = col * (tile_size)
-        wall_y = row * (tile_size)
-        @wallcollision = Collision_between_2_objects(new_x, new_y, self.width, self.height, wall_x, wall_y, tile_size, tile_size)
-        break if @wallcollision  # Exit loop early if collision detected
-       end
-      end
-      break if @wallcollision  # Exit loop early if collision detected
-    end
-
-     # Check for collisions with obstacles
-    if Check_Within_Map_Boundary(self, map, tile_size) && !(@wallcollision)
-      self.x = new_x
-      self.y = new_y
-    end  
   end
 
 #-------------------------------- Setter Methods -----------------------------------------
@@ -98,6 +88,12 @@ class Player < Sprite
 end
 
 
-#player = Player.new(50, 50, 200, 200, 'white')
-#puts player.contains? 75, 75
+# player = Player.new(50, 50, 48, 48)
+# #Setting Window
+# set width: SCREEN_HEIGHT
+# set height: SCREEN_WIDTH
+# set title: "20x20 Grid RPG" 
+# set resizable: true
+# #set fullscreen: true
+# show
 

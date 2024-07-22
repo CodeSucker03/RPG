@@ -5,15 +5,9 @@ require_relative 'Wall'
 require_relative 'Water'
 require_relative 'Grass'
 require_relative 'CollisionChecker'
+require_relative 'CommonParameter'
 
 
-
-#Global Constants
-TILE_SIZE = 48
-MAX_ROWS = 20
-MAX_COLS = 20
-SCREEN_WIDTH = TILE_SIZE * MAX_COLS
-SCREEN_HEIGHT = TILE_SIZE * MAX_ROWS
 
 
 #Wall: 0
@@ -69,41 +63,62 @@ class GameMap
         ]
 
         # Create a 2D array with all elements initialized to nil
-        @tileSet = Array.new(MAX_ROWS) {Array.new(MAX_COLS, nil)}
+        @tileSet = Array.new(CP::MAX_WORLD_ROWS) {Array.new(CP::MAX_WORLD_COLS, nil)}
 
         #showMap
         self.showMap()
     end
 
     def showMap()
-        for i in 0..MAX_ROWS-1
-            for j in 0..MAX_COLS-1
+        for i in 0..CP::MAX_WORLD_ROWS-1
+            for j in 0..CP::MAX_WORLD_COLS-1
                 case @tileManager[i][j]
                     when  0
-                        @tileSet[i][j] = Wall.new(j*TILE_SIZE, i*TILE_SIZE, TILE_SIZE, TILE_SIZE)
+                        @tileSet[i][j] = Wall.new(j*CP::TILE_SIZE, i*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE)
                     when  1
-                        @tileSet[i][j] = Grass.new(j*TILE_SIZE, i*TILE_SIZE, TILE_SIZE, TILE_SIZE)
+                        @tileSet[i][j] = Grass.new(j*CP::TILE_SIZE, i*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE)
                     when  2
-                        @tileSet[i][j] = Water.new(j*TILE_SIZE, i*TILE_SIZE, TILE_SIZE, TILE_SIZE)
+                        @tileSet[i][j] = Water.new(j*CP::TILE_SIZE, i*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE)
                     when  3
-                        @tileSet[i][j] = Fire.new(j*TILE_SIZE, i*TILE_SIZE, TILE_SIZE, TILE_SIZE)
+                        @tileSet[i][j] = Fire.new(j*CP::TILE_SIZE, i*CP::TILE_SIZE, CP::TILE_SIZE, CP::TILE_SIZE)
                 end
             end
         end
     end
 
+
+    def camera(player)
+        for i in 0..CP::MAX_WORLD_ROWS-1
+            for j in 0..CP::MAX_WORLD_COLS-1
+
+                worldX = j * CP::TILE_SIZE
+                worldY = i * CP::TILE_SIZE
+                screenX = worldX - player.worldX + player.x
+                screenY = worldY - player.worldY + player.y
+                
+                self.tileSet[i][j].image.x = screenX
+                self.tileSet[i][j].image.y = screenY
+                puts "#{tileSet[1][1].image.x} \n"
+            end
+        end
+    end
+
+
+    def update(player)
+        self.camera(player)
+    end
 end
 
 
 
 
 
-#Testing
+# #Testing
 # map = GameMap.new()
 # #------------------------------------------------------- Set up window ---------------------------------------
 # #Setting Window
-# set width: SCREEN_HEIGHT
-# set height: SCREEN_WIDTH
+# set width: CP::SCREEN_HEIGHT
+# set height: CP::SCREEN_WIDTH
 # set title: "20x20 Grid RPG" 
 # set resizable: true
 # #set fullscreen: true

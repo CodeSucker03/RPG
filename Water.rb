@@ -1,8 +1,9 @@
 require 'ruby2d'
 
 class Water
+  attr_accessor :image
   def initialize(x, y, width, height)
-    Image.new('Image/Water.png',
+    @image = Image.new('Image/Water.png',
      x: x,
      y: y,
      width: width,
