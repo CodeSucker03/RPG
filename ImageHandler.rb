@@ -12,5 +12,5 @@ def height_Of(imagePath)
     return dimensions[1]
 end
 
-#puts height_Of('Image/Water.png')
+
 

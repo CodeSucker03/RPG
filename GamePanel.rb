@@ -6,10 +6,6 @@ require_relative 'GameMap'
 require_relative 'CommonParameter'
 
 
-#----------------------------------------- Wolrd Setting -----------------------------
-
-
-
 
 
 #1. Create objects in the game
@@ -49,6 +45,7 @@ set width: CP::SCREEN_HEIGHT
 set height: CP::SCREEN_WIDTH
 set title: "20x20 Grid RPG" 
 set resizable: true
+set background: 'black'
 #set fullscreen: true
 
 
