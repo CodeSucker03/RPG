@@ -1,7 +1,6 @@
 
 require 'ruby2d'
 require_relative 'Player'
-require_relative 'EventHandler'
 require_relative 'KeyHandler'
 require_relative 'GameMap'
 require_relative 'CommonParameter'
@@ -39,8 +38,7 @@ update do
     text.text = "Coordinate: #{player.worldX}  #{player.worldY} \n"
     map.update(player)
 
-    # wall.image.x = player.worldX 
-    # puts "#{wall.image.x} \n"
+  
 end
 
 

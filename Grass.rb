@@ -7,7 +7,7 @@ class Grass
      x: x,
      y: y,
      width: width,
-     height: height,
+     height: height
      )
   end
 end

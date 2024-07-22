@@ -6,7 +6,7 @@ require_relative 'Water'
 require_relative 'Grass'
 require_relative 'CollisionChecker'
 require_relative 'CommonParameter'
-
+require_relative 'ImageHandler'
 
 
 
@@ -90,15 +90,53 @@ class GameMap
     def camera(player)
         for i in 0..CP::MAX_WORLD_ROWS-1
             for j in 0..CP::MAX_WORLD_COLS-1
-
                 worldX = j * CP::TILE_SIZE
                 worldY = i * CP::TILE_SIZE
                 screenX = worldX - player.worldX + player.x
                 screenY = worldY - player.worldY + player.y
-                
-                self.tileSet[i][j].image.x = screenX
-                self.tileSet[i][j].image.y = screenY
-                puts "#{tileSet[1][1].image.x} \n"
+                if ( worldX + CP::TILE_SIZE >= player.worldX - player.x &&
+                     worldX - CP::TILE_SIZE <= player.worldX + player.x &&
+                     worldY + CP::TILE_SIZE >= player.worldY - player.y &&
+                     worldY - CP::TILE_SIZE <= player.worldY + player.y)
+
+                     @tileSet[i][j].image.x = screenX
+                     @tileSet[i][j].image.y = screenY
+                    # case @tileManager[i][j]
+                    #     when  0
+                    #         @tileSet[i][j].image = Image.new('Image/Wall.png',
+                    #                                             x: screenX,
+                    #                                             y: screenY,
+                    #                                             width: CP::TILE_SIZE,
+                    #                                             height: CP::TILE_SIZE)
+                    #     when  1
+                    #         @tileSet[i][j].image = Image.new('Image/Grass.png',
+                    #                                             x: screenX,
+                    #                                             y: screenY,
+                    #                                             width: CP::TILE_SIZE,
+                    #                                             height: CP::TILE_SIZE)
+                    #     when  2
+                    #         @tileSet[i][j].image = Image.new('Image/Water.png',
+                    #                                             x: screenX,
+                    #                                             y: screenY,
+                    #                                             width: CP::TILE_SIZE,
+                    #                                             height: CP::TILE_SIZE)
+                    #     when  3
+                    #         @tileSet[i][j].image = Sprite.new('Image/Fire.png',
+                    #                                             x: screenX,
+                    #                                             y: screenY,
+                    #                                             width: CP::TILE_SIZE,
+                    #                                             height: CP::TILE_SIZE,
+                    #                                             clip_width: width_Of('Image/Fire.png') / 8,
+                    #                                             loop: true,
+                    #                                             time: 200)
+                    # end
+                # else
+                #     if (@tileManager[i][j] == 3)
+                #         @tileSet[i][j].image.remove 
+                #     else
+                #         @tileSet[i][j].image.remove
+                #     end
+                end   
             end
         end
     end

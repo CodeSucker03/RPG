@@ -17,7 +17,7 @@ class Player < Sprite
       clip_width: width_Of('Image/Player.png') / 4,
       animations: {fly: 1..3}
     )
-    @speed = 10
+    @speed = 3
     @upDirection = false
     @downDirection = false
     @leftDirection = false

@@ -13,7 +13,7 @@ class Fire
       height: height,
       clip_width: width_Of('Image/Fire.png') / 8,
       loop: true,
-      time: 200,
+      time: 200
     )
     self.runAnimation
   end
