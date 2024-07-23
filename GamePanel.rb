@@ -23,7 +23,7 @@ text = Text.new(
 )
 
 
-#2. Get some user's input
+#2. Get some of user's input
 get_key_input(player)
 
 #3.
