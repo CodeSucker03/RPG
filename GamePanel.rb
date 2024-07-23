@@ -23,7 +23,7 @@ text = Text.new(
 )
 
 
-#2. Get user's input
+#2. Get some user's input
 get_key_input(player)
 
 #3.
@@ -33,16 +33,16 @@ update do
     text.text = "Coordinate: #{player.worldX}  #{player.worldY} \n"
     map.update(player)
 
-  
+
 end
 
 
 
 #------------------------------------------------------- Set up window ---------------------------------------
 #Setting Window
-set width: CP::SCREEN_WIDTH 
+set width: CP::SCREEN_WIDTH
 set height: CP::SCREEN_HEIGHT
-set title: "20x20 Grid RPG" 
+set title: "20x20 Grid RPG"
 set resizable: true
 set background: 'black'
 #set fullscreen: true
@@ -50,7 +50,3 @@ set background: 'black'
 
 #------------------------------------------------------- Show window ---------------------------------------
 show
-
-
-
-
