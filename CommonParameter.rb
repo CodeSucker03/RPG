@@ -1,10 +1,10 @@
 module CP
     TILE_SIZE = 48
-    MAX_ROWS = 20
-    MAX_COLS = 20
+    MAX_ROWS = 12
+    MAX_COLS = 16
     SCREEN_WIDTH = TILE_SIZE * MAX_COLS
     SCREEN_HEIGHT = TILE_SIZE * MAX_ROWS
-
+    
     #World Setting
     MAX_WORLD_ROWS = 40
     MAX_WORLD_COLS = 40

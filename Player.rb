@@ -2,11 +2,15 @@ require 'ruby2d'
 require_relative 'ImageHandler' # to read dimemsion of image ==> must install (gem install rmagick)
 require_relative 'CollisionChecker'
 require_relative 'CommonParameter'
+include CCHECK
+
+
 
 
 class Player < Sprite
-  attr_reader :x, :y, :speed, :worldX, :worldY
-  attr_accessor :upDirection, :downDirection, :leftDirection, :rightDirection
+  attr_reader :x, :y, :speed, :worldX, :worldY 
+  attr_accessor :upDirection, :downDirection, :leftDirection, :rightDirection, :solidArea, :collisionOn
+  
 
   def initialize(width, height)
     super(
@@ -27,13 +31,6 @@ class Player < Sprite
     @worldX = @x
     @worldY = @y
 
-
-
-
-
-
-
-
     #Area for collision
     @solidArea = Rectangle.new(
       x: 8, y: 16,            # Position
@@ -42,20 +39,31 @@ class Player < Sprite
     )
 
     @collisionOn = false
+
+    
   end
 
 
 #-------------------------------- Update -----------------------------------------
-  def update()
-    if(self.upDirection == true)
-      @worldY -= @speed
-    elsif(self.downDirection == true)
-      @worldY += @speed
-    elsif(self.leftDirection == true)
-      @worldX -= @speed
-    elsif(self.rightDirection == true)
-      @worldX += @speed
+  def updatePlayer(map)
+
+    #1. Check if player collides wall
+    @collisionOn = false
+
+    CCHECK.checkTile(self, map)
+    puts "#{@collisionOn} \n"
+    if(@collisionOn == false)
+      if(self.upDirection == true)
+        @worldY -= @speed
+      elsif(self.downDirection == true)
+        @worldY += @speed
+      elsif(self.leftDirection == true)
+        @worldX -= @speed
+      elsif(self.rightDirection == true)
+        @worldX += @speed
+      end
     end
+
   end
 
 

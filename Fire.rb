@@ -4,6 +4,7 @@ require_relative 'ImageHandler'
 
 class Fire
   attr_accessor :image
+  attr_reader :isSolid
   def initialize(x, y, width,height)
     @image = Sprite.new(
       'Image/Fire.png',
@@ -15,6 +16,7 @@ class Fire
       loop: true,
       time: 200
     )
+    @isSolid = false
     self.runAnimation
   end
 

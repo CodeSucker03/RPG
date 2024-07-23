@@ -22,7 +22,6 @@ text = Text.new(
   #z: 10
 )
 
-#wall = Wall.new(0,0, 48, 48)
 
 #2. Get user's input
 get_key_input(player)
@@ -30,7 +29,7 @@ get_key_input(player)
 #3.
 #------------------------------------------------------- Game Loop ------------------------------------------
 update do
-    player.update()
+    player.updatePlayer(map)
     text.text = "Coordinate: #{player.worldX}  #{player.worldY} \n"
     map.update(player)
 
@@ -41,8 +40,8 @@ end
 
 #------------------------------------------------------- Set up window ---------------------------------------
 #Setting Window
-set width: CP::SCREEN_HEIGHT
-set height: CP::SCREEN_WIDTH
+set width: CP::SCREEN_WIDTH 
+set height: CP::SCREEN_HEIGHT
 set title: "20x20 Grid RPG" 
 set resizable: true
 set background: 'black'

@@ -36,12 +36,12 @@ def get_key_input(player)
   on :key_held do |event|
     player.runAnimation()
     handle_key_down(event, player)
-    puts "You are PRESSING a key\n" 
+    #puts "You are PRESSING a key\n" 
   end
 
   on :key_up do |event|
     handle_key_up(event, player)
     player.stop                             #stop animation when do not press any key
-    puts "You are REALEASING a key\n"
+    #puts "You are REALEASING a key\n"
   end
 end

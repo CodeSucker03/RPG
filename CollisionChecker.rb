@@ -1,22 +1,58 @@
 require 'ruby2d'
+require_relative 'CommonParameter'
+#require_relative 'GameMap'
 
-def Collision_between_2_objects(x1, y1, object1_width, object1_height, x2, y2, object2_width, object2_height)
-  collision = false
-  if x1 + object1_width >= x2 && x1 <= x2 + object2_width &&
-     y1 + object1_height >= y2 && y1 <= y2 + object2_height
-    collision = true
+module CCHECK
+  def checkTile(entity, map)
+    entityLeftWorldX = entity.worldX + entity.solidArea.x 
+    entityRightWorldX = entity.worldX + entity.solidArea.x + entity.solidArea.width
+    entityTopWorldY = entity.worldY + entity.solidArea.y 
+    entityBottomWorldY = entity.worldY + entity.solidArea.y + entity.solidArea.height
+
+    entityLeftCol = entityLeftWorldX / CP::TILE_SIZE
+    entityRightCol = entityRightWorldX / CP::TILE_SIZE
+    entityTopRow = entityTopWorldY / CP::TILE_SIZE
+    entityBottomRow = entityBottomWorldY / CP::TILE_SIZE
+
+    tileNum1 = nil
+    tileNum2 = nil
+
+    if entity.upDirection == true
+      entityTopRow = (entityTopWorldY - entity.speed) / CP::TILE_SIZE
+      tileNum1 = map.tileManager[entityTopRow][entityLeftCol]
+      tileNum2 = map.tileManager[entityTopRow][entityRightCol]
+      if(map.tile[tileNum1].isSolid == true || map.tile[tileNum2].isSolid == true)
+          entity.collisionOn = true
+      end
+
+    elsif entity.downDirection == true
+      entityBottomRow = (entityBottomWorldY + entity.speed) / CP::TILE_SIZE
+      tileNum1 = map.tileManager[entityBottomRow][entityLeftCol]
+      tileNum2 = map.tileManager[entityBottomRow][entityRightCol]
+      if(map.tile[tileNum1].isSolid == true || map.tile[tileNum2].isSolid == true)
+          entity.collisionOn = true
+      end
+
+    elsif entity.leftDirection == true
+      entityLeftCol = (entityLeftWorldX - entity.speed) / CP::TILE_SIZE
+      tileNum1 = map.tileManager[entityTopRow][entityLeftCol]
+      tileNum2 = map.tileManager[entityBottomRow][entityLeftCol]
+      if(map.tile[tileNum1].isSolid == true || map.tile[tileNum2].isSolid == true)
+          entity.collisionOn = true
+      end
+
+    elsif entity.rightDirection == true
+      entityRightCol = (entityRightWorldX + entity.speed) / CP::TILE_SIZE
+      tileNum1 = map.tileManager[entityTopRow][entityRightCol]
+      tileNum2 = map.tileManager[entityBottomRow][entityRightCol]
+      if(map.tile[tileNum1].isSolid == true || map.tile[tileNum2].isSolid == true)
+          entity.collisionOn = true
+      end
+    end
   end
-  return collision
-end
-
-def Check_Within_Map_Boundary(character, map, tile_size)
-  within_x_bounds = character.x >= 0 && character.x + character.width <= map.size * (tile_size)
-  within_y_bounds = character.y >= 0 && character.y + character.height <= map.size * (tile_size)
-  return within_x_bounds && within_y_bounds
 end
 
 
 
-#s = Square.new(x: 50, y: 50, size: 100)
-#puts s.contains? 75, 75  # returns true
-#puts s.contains? 10, 20  # returns false
+
+
